@@ -8,6 +8,10 @@ module Tornado
       @content = content
     end
 
+    def size
+      @content.unpack('C*').size
+    end
+
     def sha1
       Digest::SHA1.hexdigest @content
     end
