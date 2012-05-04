@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+
+require 'tornado'
+
+raise if ARGV.count == 0
+
+ARGV.each do |filename|
+  i = 1
+  file = File.open filename
+  puts "#{filename}:\t#{file.sha1} (#{file.size} bytes)"
+  file.chunk.each do |chunk|
+    puts "\tchunk #{i}:\t#{chunk} (#{chunk.size} bytes)"
+    i += 1
+  end
+end
