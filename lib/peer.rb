@@ -14,10 +14,10 @@ module Tornado
       id = file.id
       file_info = { :name   => File.basename(file.path),
                     :size   => file.size,
-                    :chunks => file.chunk.map{ |chunk| chunk.id } }
+                    :chunks => file.chunk }
       post "/files/#{id}", file_info.to_json
       file_info[:chunks].each do |chunk|
-        post "/chunks/#{chunk}", chunk.content
+        post "/chunks/#{chunk.id}", chunk.content
       end
     end
 
