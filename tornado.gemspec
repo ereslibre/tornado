@@ -6,6 +6,6 @@ Gem::Specification.new do |s|
   s.description = 'Library for the Tornado P2P Network'
   s.authors     = ['Rafael Fernández López']
   s.email       = 'ereslibre@ereslibre.es'
-  s.files       = Dir.glob("{bin,lib}/**/*")
+  s.files       = Dir.glob("{bin,lib,config}/**/*")
   s.homepage    = 'http://www.ereslibre.es/'
 end
