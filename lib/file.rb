@@ -11,7 +11,7 @@ class File
     @chunks
   end
 
-  def sha1
+  def id
     self.rewind
     Digest::SHA1.hexdigest self.read
   end
