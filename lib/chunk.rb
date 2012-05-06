@@ -1,3 +1,5 @@
+require 'digest/sha1'
+
 module Tornado
 
   class Chunk

@@ -1,3 +1,5 @@
+require 'yaml'
+
 module Tornado
 
   class Config

@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require 'tornado_server'
+
+Tornado::Server.run!
