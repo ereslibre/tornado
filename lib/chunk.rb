@@ -1,3 +1,4 @@
+require 'base64'
 require 'digest/sha1'
 
 module Tornado
@@ -24,12 +25,12 @@ module Tornado
 
     def self.read(id)
       raise unless exists?(id)
-      File.open("#{Tornado.root_path}/#{id}", 'rb').read
+      Base64.decode64 File.open("#{Tornado.root_path}/#{id}", 'rb').read
     end
 
     def self.save(id, content)
       raise unless id == Digest::SHA1.hexdigest(content)
-      File.open("#{Tornado.root_path}/#{id}", 'w') { |f| f.write(content) }
+      File.open("#{Tornado.root_path}/#{id}", 'w') { |f| f.write(Base64.encode64 content) }
     end
 
     def self.exists?(id)

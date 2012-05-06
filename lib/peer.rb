@@ -18,7 +18,22 @@ module Tornado
       end
     end
 
+    def download(id)
+      chunks = JSON.parse get("/#{id}/chunks")
+      content = ''
+      chunks.each do |chunk|
+        content += Chunk.new(get("/#{id}/chunks/#{chunk}")).content
+      end
+      content
+    end
+
     private
+
+    def get(resource)
+      req = Net::HTTP::Get.new(resource, initheader = { 'Content-Type' =>'application/json' })
+      res = Net::HTTP.new(@ip, '4567').start { |http| http.request(req) }
+      res.body
+    end
 
     def post(resource, payload)
       req = Net::HTTP::Post.new(resource, initheader = { 'Content-Type' =>'application/json' })

@@ -13,6 +13,11 @@ optparse = OptionParser.new do |opts|
     options[:upload] = file
   end
 
+  options[:download] = nil
+  opts.on('-d', '--download ID', 'Download file identified by ID') do |id|
+    options[:download] = id
+  end
+
   options[:peers] = false
   opts.on('-p', '--peers', 'Ask for known peers') do
     options[:peers] = true
@@ -21,6 +26,8 @@ end.parse!
 
 if options[:upload]
   Tornado::Network.upload options[:upload]
+elsif options[:download]
+  Tornado::Network.download options[:download]
 elsif options[:peers]
   puts Tornado::Network.peers
 end

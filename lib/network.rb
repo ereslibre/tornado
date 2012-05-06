@@ -20,6 +20,12 @@ module Tornado
       find_peer.upload file.id, chunks
     end
 
+    def self.download(id)
+      Tornado.std_log "downloading file identified with #{id}"
+      content = find_peer.download id
+      File.open(id, 'w') { |f| f.write(content) }
+    end
+
     def self.propagate_chunks(id, chunks)
       @@files[id] = chunks
     end
