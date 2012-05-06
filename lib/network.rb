@@ -14,7 +14,7 @@ module Tornado
     end
 
     def self.upload(file_path)
-      std_log "uploading file #{file_path}"
+      Tornado.std_log "uploading file #{file_path}"
       file = File.open file_path
       chunks = file.chunk
       find_peer.upload file.id, chunks

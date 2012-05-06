@@ -1,3 +1,4 @@
+require 'json'
 require 'net/http'
 
 module Tornado
@@ -11,7 +12,7 @@ module Tornado
     end
 
     def upload(id, chunks)
-      post "/#{id}/chunks", chunks.map { |chunk| chunk.id }
+      post "/#{id}/chunks", chunks.map{ |chunk| chunk.id }.to_json
       chunks.each do |chunk|
         post "/#{id}/chunks/#{chunk.id}", chunk.content
       end

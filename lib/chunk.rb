@@ -24,16 +24,16 @@ module Tornado
 
     def self.read(id)
       raise unless exists?(id)
-      File.open("#{root_path}/#{id}", 'rb').read
+      File.open("#{Tornado.root_path}/#{id}", 'rb').read
     end
 
     def self.save(id, content)
       raise unless id == Digest::SHA1.hexdigest(content)
-      File.open("#{root_path}/#{id}", 'w') { |f| f.write(content) }
+      File.open("#{Tornado.root_path}/#{id}", 'w') { |f| f.write(content) }
     end
 
     def self.exists?(id)
-      File.exists? "#{root_path}/#{id}"
+      File.exists? "#{Tornado.root_path}/#{id}"
     end
 
   end
