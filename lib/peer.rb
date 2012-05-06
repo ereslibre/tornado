@@ -27,7 +27,7 @@ module Tornado
       file_info['chunks'].each do |chunk|
         content += Base64.decode64 get("/chunks/#{chunk}")
       end
-      content
+      return file_info['name'], content
     end
 
     private
