@@ -1,15 +1,26 @@
 #!/usr/bin/env ruby
 
 require 'tornado'
+require 'optparse'
 
-raise if ARGV.count == 0
+options = Hash.new
 
-ARGV.each do |filename|
-  i = 1
-  file = File.open filename
-  puts "#{filename}:\t#{file.id} (#{file.size} bytes)"
-  file.chunk.each do |chunk|
-    puts "\tchunk #{i}:\t#{chunk} (#{chunk.size} bytes)"
-    i += 1
+optparse = OptionParser.new do |opts|
+  opts.banner = "Tornado"
+
+  options[:upload] = nil
+  opts.on('-u', '--upload FILE', 'Upload FILE') do |file|
+    options[:upload] = file
   end
+
+  options[:peers] = false
+  opts.on('-p', '--peers', 'Ask for known peers') do
+    options[:peers] = true
+  end
+end.parse!
+
+if options[:upload]
+  Tornado::Network.upload options[:upload]
+elsif options[:peers]
+  puts Tornado::Network.peers
 end
