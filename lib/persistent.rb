@@ -32,5 +32,4 @@ end
 
 at_exit do
   Tornado::Persistent.close
-  Tornado.std_log 'closing database'
 end
