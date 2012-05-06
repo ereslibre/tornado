@@ -1,0 +1,12 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    bdb (0.2.6.5)
+      tuple (>= 0.1.2)
+    tuple (0.1.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bdb

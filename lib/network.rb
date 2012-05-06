@@ -3,10 +3,9 @@ module Tornado
   class Network
 
     @@peers = Config.trusted_peers
-    @@files = Hash.new # FIXME: more consistent storage :)
 
     def self.chunks(id)
-      @@files[id]
+      JSON.parse Persistent.get(id)
     end
 
     def self.chunk(id)
@@ -27,7 +26,7 @@ module Tornado
     end
 
     def self.propagate_chunks(id, chunks)
-      @@files[id] = chunks
+      Persistent.put(id, chunks.to_json)
     end
 
     def self.propagate_chunk(id, content)

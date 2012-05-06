@@ -1,4 +1,3 @@
-require 'json'
 require 'sinatra/base'
 
 module Tornado

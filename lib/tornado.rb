@@ -1,4 +1,9 @@
+require 'json'
+require 'base64'
+require 'digest/sha1'
+
 require 'initializer'
+require 'persistent'
 require 'config'
 require 'chunk'
 require 'file'
