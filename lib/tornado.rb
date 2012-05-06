@@ -1,3 +1,4 @@
+require 'initializer'
 require 'config'
 require 'chunk'
 require 'file'
