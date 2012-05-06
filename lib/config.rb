@@ -9,7 +9,7 @@ module Tornado
 
     def self.trusted_peers
       load_config
-      @@config['trusted_peers']
+      @@config['trusted_peers'].values
     end
 
     private

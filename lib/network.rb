@@ -2,19 +2,28 @@ module Tornado
 
   class Network
 
-    def chunks(id)
+    @@peers = Config.trusted_peers
+
+    def self.chunks(id)
     end
 
-    def chunk(id)
+    def self.chunk(id)
     end
 
-    def upload(file_path)
+    def self.upload(file_path)
       file = File.open file_path
       chunks = file.chunk
-      peer = peers.first
+      peer = find_peer
     end
 
-    def peers
+    def self.peers
+      @@peers
+    end
+
+    private
+
+    def self.find_peer
+      peers.first
     end
 
   end
