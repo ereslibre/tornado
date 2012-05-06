@@ -1,4 +1,5 @@
 require 'json'
+require 'base64'
 require 'net/http'
 
 module Tornado
@@ -22,7 +23,7 @@ module Tornado
       chunks = JSON.parse get("/#{id}/chunks")
       content = ''
       chunks.each do |chunk|
-        content += Chunk.new(get("/#{id}/chunks/#{chunk}")).content
+        content += Base64.decode64 get("/#{id}/chunks/#{chunk}")
       end
       content
     end

@@ -14,7 +14,7 @@ module Tornado
     end
 
     get '/:file/chunks/:chunk' do
-      Network.chunk(params[:chunk]).to_json
+      Network.chunk params[:chunk]
     end
 
     post '/:file/chunks' do
