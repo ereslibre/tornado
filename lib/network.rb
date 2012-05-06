@@ -39,7 +39,8 @@ module Tornado
     private
 
     def self.find_peer
-      Peer.new peers.first
+      peer = peers.first
+      Peer.new peers['ip'], peers['port']
     end
 
   end

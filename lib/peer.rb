@@ -4,10 +4,11 @@ module Tornado
 
   class Peer
 
-    attr_accessor :ip
+    attr_accessor :ip, :port
 
-    def initialize(ip)
+    def initialize(ip, port)
       @ip = ip
+      @port = port
     end
 
     def upload(file)
@@ -34,14 +35,14 @@ module Tornado
 
     def get(resource)
       req = Net::HTTP::Get.new(resource, initheader = { 'Content-Type' =>'application/json' })
-      res = Net::HTTP.new(@ip, '4567').start { |http| http.request(req) }
+      res = Net::HTTP.new(@ip, @port).start { |http| http.request(req) }
       res.body
     end
 
     def post(resource, payload)
       req = Net::HTTP::Post.new(resource, initheader = { 'Content-Type' =>'application/json' })
       req.body = payload
-      Net::HTTP.new(@ip, '4567').start { |http| http.request(req) }
+      Net::HTTP.new(@ip, @port).start { |http| http.request(req) }
     end
 
   end

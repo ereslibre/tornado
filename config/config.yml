@@ -1,2 +1,4 @@
 trusted_peers:
-  peer_one: 192.168.0.196
+  peer_one:
+    ip: 192.168.0.196
+    port: 4567
