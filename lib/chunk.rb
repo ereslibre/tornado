@@ -24,7 +24,7 @@ module Tornado
 
     def self.read(id)
       raise unless exists?(id)
-      File.open("#{root_path}/#{id}". 'rb').read
+      File.open("#{root_path}/#{id}", 'rb').read
     end
 
     def self.save(id, content)
