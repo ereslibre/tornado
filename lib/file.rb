@@ -13,7 +13,7 @@ class File
 
   def id
     self.rewind
-    Digest::SHA1.hexdigest self.read
+    Digest::SHA512.hexdigest self.read
   end
 
 end

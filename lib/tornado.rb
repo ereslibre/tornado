@@ -1,6 +1,6 @@
 require 'json'
 require 'base64'
-require 'digest/sha1'
+require 'digest/sha2'
 
 require 'initializer'
 require 'persistent'

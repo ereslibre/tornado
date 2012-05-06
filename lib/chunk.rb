@@ -13,7 +13,7 @@ module Tornado
     end
 
     def id
-      Digest::SHA1.hexdigest @content
+      Digest::SHA512.hexdigest @content
     end
 
     def to_s
@@ -26,7 +26,7 @@ module Tornado
     end
 
     def self.save(id, content)
-      raise unless id == Digest::SHA1.hexdigest(content)
+      raise unless id == Digest::SHA512.hexdigest(content)
       File.open("#{Tornado.root_path}/#{id}", 'w') { |f| f.write(Base64.encode64 content) }
     end
 
