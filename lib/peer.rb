@@ -10,18 +10,22 @@ module Tornado
       @ip = ip
     end
 
-    def upload(id, chunks)
-      post "/#{id}/chunks", chunks.map{ |chunk| chunk.id }.to_json
-      chunks.each do |chunk|
-        post "/#{id}/chunks/#{chunk.id}", chunk.content
+    def upload(file)
+      id = file.id
+      file_info = { :name   => File.basename(file.path),
+                    :size   => file.size,
+                    :chunks => file.chunk.map{ |chunk| chunk.id } }
+      post "/files/#{id}", file_info.to_json
+      file_info[:chunks].each do |chunk|
+        post "/chunks/#{chunk.id}", chunk.content
       end
     end
 
     def download(id)
-      chunks = JSON.parse get("/#{id}/chunks")
+      file_info = JSON.parse get("/files/#{id}")
       content = ''
-      chunks.each do |chunk|
-        content += Base64.decode64 get("/#{id}/chunks/#{chunk}")
+      file_info['chunks'].each do |chunk|
+        content += Base64.decode64 get("/chunks/#{chunk}")
       end
       content
     end

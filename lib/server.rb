@@ -8,21 +8,21 @@ module Tornado
       content_type :json
     end
 
-    get '/:file/chunks' do
+    get '/files/:file' do
       Network.chunks(params[:file]).to_json
     end
 
-    get '/:file/chunks/:chunk' do
+    get '/chunks/:chunk' do
       Network.chunk params[:chunk]
     end
 
-    post '/:file/chunks' do
+    post '/files/:file' do
       id = params[:file]
       chunks = JSON.parse request.body.read
       Network.propagate_chunks id, chunks
     end
 
-    post '/:file/chunks/:chunk' do
+    post '/chunks/:chunk' do
       id = params[:chunk]
       Network.propagate_chunk id, request.body.read
     end
