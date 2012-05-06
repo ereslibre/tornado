@@ -8,4 +8,5 @@ Gem::Specification.new do |s|
   s.email       = 'ereslibre@ereslibre.es'
   s.files       = Dir.glob("{bin,lib,config}/**/*")
   s.homepage    = 'http://www.ereslibre.es/'
+  s.executables << 'tornado' << 'tornado_server'
 end
