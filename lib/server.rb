@@ -28,6 +28,8 @@ module Tornado
 
   class Server < Sinatra::Base
 
+    set :environment, :production
+
     before do
       content_type :json
     end
