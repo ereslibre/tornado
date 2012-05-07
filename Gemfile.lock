@@ -3,6 +3,7 @@ GEM
   specs:
     bdb (0.2.6.5)
       tuple (>= 0.1.2)
+    bzip2-ruby (0.2.7)
     tuple (0.1.2)
 
 PLATFORMS
@@ -10,3 +11,4 @@ PLATFORMS
 
 DEPENDENCIES
   bdb
+  bzip2-ruby

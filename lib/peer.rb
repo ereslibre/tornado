@@ -45,7 +45,7 @@ module Tornado
       total_chunks = file_info[:chunks].count
       file_info[:chunks].each do |chunk|
         Tornado.std_progress "uploading chunk #{i} of #{total_chunks}"
-        post "/chunks/#{chunk.id}", chunk.content
+        post "/chunks/#{chunk.id}", Base64.encode64(chunk.content)
         i += 1
       end
       Tornado.std_log ''

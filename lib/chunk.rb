@@ -22,6 +22,8 @@
 # OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 # SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+require 'bzip2'
+
 module Tornado
 
   class Chunk
@@ -46,12 +48,13 @@ module Tornado
 
     def self.read(id)
       raise unless exists?(id)
-      File.open("#{Tornado.root_path}/#{id}", 'rb').read
+      Bzip2.uncompress File.open("#{Tornado.root_path}/#{id}", 'rb').read
     end
 
     def self.save(id, content)
-      raise unless id == Digest::SHA512.hexdigest(content)
-      File.open("#{Tornado.root_path}/#{id}", 'w') { |f| f.write(Base64.encode64 content) }
+      File.open("#{Tornado.root_path}/#{id}", 'w') { |f|
+        f.write(Bzip2.compress content)
+      }
     end
 
     def self.exists?(id)
