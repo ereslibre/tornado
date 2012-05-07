@@ -22,7 +22,7 @@
 # OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 # SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-require 'bzip2'
+require 'zlib'
 
 module Tornado
 
@@ -48,14 +48,13 @@ module Tornado
 
     def self.read(id)
       raise unless exists?(id)
-      Bzip2.uncompress File.open("#{Tornado.root_path}/#{id}", 'rb').read
+      Zlib::Inflate.inflate File.open("#{Tornado.root_path}/#{id}", 'rb').read
     end
 
     def self.save(id, content)
       File.open("#{Tornado.root_path}/#{id}", 'wb') { |f|
-        f.write(Bzip2.compress content)
+        f.write(Zlib::Deflate.deflate content)
       }
-      true
     end
 
     def self.exists?(id)
