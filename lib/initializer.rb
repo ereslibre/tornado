@@ -32,6 +32,17 @@ module Tornado
     puts log
   end
 
+  def self.std_progress(log)
+    print self.reset
+    print log
+  end
+
   Dir.mkdir root_path unless File.exists? root_path
+
+  private
+
+  def self.reset
+    "\r\e[0K"
+  end
 
 end

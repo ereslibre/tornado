@@ -41,17 +41,27 @@ module Tornado
                     :size   => file.size,
                     :chunks => file.chunk }
       post "/files/#{id}", file_info.to_json
+      i = 1
+      total_chunks = file_info[:chunks].count
       file_info[:chunks].each do |chunk|
+        Tornado.std_progress "uploading chunk #{i} of #{total_chunks}"
         post "/chunks/#{chunk.id}", chunk.content
+        i += 1
       end
+      Tornado.std_log ''
     end
 
     def download(id)
       file_info = JSON.parse get("/files/#{id}")
+      i = 1
+      total_chunks = file_info['chunks'].count
       content = ''
       file_info['chunks'].each do |chunk|
+        Tornado.std_progress "downloading chunk #{i} of #{total_chunks}"
         content += Base64.decode64 get("/chunks/#{chunk}")
+        i += 1
       end
+      Tornado.std_log ''
       return file_info['name'], content
     end
 
