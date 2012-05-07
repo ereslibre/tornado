@@ -52,9 +52,10 @@ module Tornado
     end
 
     def self.save(id, content)
-      File.open("#{Tornado.root_path}/#{id}", 'w') { |f|
+      File.open("#{Tornado.root_path}/#{id}", 'wb') { |f|
         f.write(Bzip2.compress content)
       }
+      true
     end
 
     def self.exists?(id)
