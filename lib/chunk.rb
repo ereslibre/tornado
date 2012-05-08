@@ -22,8 +22,6 @@
 # OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 # SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-require 'zlib'
-
 module Tornado
 
   class Chunk
@@ -48,12 +46,12 @@ module Tornado
 
     def self.read(id)
       raise unless exists?(id)
-      Zlib::Inflate.inflate File.open("#{Tornado.root_path}/#{id}", 'rb').read
+      File.open("#{Tornado.root_path}/#{id}", 'rb').read
     end
 
     def self.save(id, content)
       File.open("#{Tornado.root_path}/#{id}", 'wb') { |f|
-        f.write(Zlib::Deflate.deflate content)
+        f.write(content)
       }
     end
 
