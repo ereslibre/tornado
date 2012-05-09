@@ -54,18 +54,18 @@ module Tornado
 
     def download(id)
       file_info = JSON.parse get("/files/#{id}")
+      file = File.open file_info['name'], 'wb'
       i = 1
       total_chunks = file_info['chunks'].count
-      content = ''
       file_info['chunks'].each do |chunk_|
         Tornado.std_progress "downloading chunk #{i} of #{total_chunks}"
         chunk = Chunk.new
-        chunk.content = get "/chunks/#{chunk_}"
-        content += chunk.raw_content
+        chunk.content = get "/chunks/#{chunk_['id']}"
+        file.seek chunk_['offset']
+        file.write chunk.raw_content
         i += 1
       end
       Tornado.stop_std_progress
-      return file_info['name'], content
     end
 
     private
