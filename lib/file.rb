@@ -29,7 +29,7 @@ class File
   def chunk
     @chunks = Array.new
     self.rewind
-    while (content = self.read(Chunk.default_size))
+    while (content = self.read(Tornado::Chunk.default_size))
       chunk = Tornado::Chunk.new
       chunk.raw_content = content
       @chunks << chunk
