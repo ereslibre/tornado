@@ -43,6 +43,10 @@ module Tornado
     print log
   end
 
+  def self.stop_std_progress
+    print self.reset
+  end
+
   Dir.mkdir root_path unless File.exists? root_path
 
   private

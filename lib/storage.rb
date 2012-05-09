@@ -1,5 +1,3 @@
-#!/usr/bin/env ruby
-
 # Copyright (c) 2012 Rafael Fernández López <ereslibre@ereslibre.es>
 #
 # Permission is hereby granted, free of charge, to any
@@ -24,41 +22,44 @@
 # OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 # SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-require 'tornado'
-require 'optparse'
+module Tornado
 
-options = Hash.new
+  class Storage
 
-optparse = OptionParser.new do |opts|
-  opts.banner = "Tornado"
+    def self.check_integrity
+      valid = 0
+      total_size = 0
+      total_real_size = 0
+      invalid_size = 0
+      invalid_real_size = 0
+      invalid = Array.new
+      all_chunks = Chunk.all
+      i = 1
+      all_chunks.each do |chunk|
+        if chunk.healthy?
+          valid += 1
+        else
+          invalid << chunk
+          invalid_size += chunk.size
+          invalid_real_size += chunk.real_size
+        end
+        total_size += chunk.size
+        total_real_size += chunk.real_size
+        Tornado.std_progress "checking integrity of chunk #{i} of #{all_chunks.count}"
+        i += 1
+      end
+      Tornado.stop_std_progress
+      percent_valid = valid * 100 / all_chunks.count
+      puts 'summary'
+      puts "total chunks: #{all_chunks.count}"
+      puts "total size: #{total_size} bytes"
+      puts "total real size: #{total_real_size} bytes"
+      puts "invalid chunks size: #{invalid_size} bytes"
+      puts "invalid chunks real size: #{invalid_real_size} bytes"
+      puts "valid chunks: #{percent_valid}%"
+      puts "invalid chunks: #{invalid.count}"
+    end
 
-  options[:upload] = nil
-  opts.on('-u', '--upload FILE', 'Upload FILE') do |file|
-    options[:upload] = file
   end
 
-  options[:download] = nil
-  opts.on('-d', '--download ID', 'Download file identified by ID') do |id|
-    options[:download] = id
-  end
-
-  options[:peers] = false
-  opts.on('-p', '--peers', 'Ask for known peers') do
-    options[:peers] = true
-  end
-
-  options[:integrity] = false
-  opts.on('-c', '--check-integrity', 'Checks storage integrity') do
-    options[:integrity] = true
-  end
-end.parse!
-
-if options[:upload]
-  Tornado::Network.upload options[:upload]
-elsif options[:download]
-  Tornado::Network.download options[:download]
-elsif options[:peers]
-  puts Tornado::Network.peers
-elsif options[:integrity]
-  Tornado::Storage.check_integrity
 end

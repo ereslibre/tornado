@@ -26,6 +26,8 @@ module Tornado
 
   class Chunk
 
+    attr_accessor :filename
+
     def content
       @content
     end
@@ -48,6 +50,10 @@ module Tornado
       @raw_content.unpack('C*').size
     end
 
+    def real_size
+      Chunk.size @filename
+    end
+
     def id
       Digest::SHA512.hexdigest @raw_content
     end
@@ -58,6 +64,10 @@ module Tornado
 
     def save
       Chunk.save id, @content
+    end
+
+    def healthy?
+      id == @filename
     end
 
     def self.all
@@ -72,8 +82,13 @@ module Tornado
 
     def self.find(id)
       chunk = Chunk.new
+      chunk.filename = id
       chunk.content = self.read id
       chunk
+    end
+
+    def self.default_size
+      102400
     end
 
     private
@@ -84,9 +99,14 @@ module Tornado
     end
 
     def self.save(id, content)
+      raise if exists?(id)
       File.open(File.join(Tornado.root_path, id), 'wb') { |f|
         f.write(content)
       }
+    end
+
+    def self.size(id)
+      File.size File.join(Tornado.root_path, id)
     end
 
     def self.exists?(id)

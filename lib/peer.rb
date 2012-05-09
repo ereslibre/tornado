@@ -47,6 +47,7 @@ module Tornado
         post "/chunks/#{chunk.id}", chunk.content
         i += 1
       end
+      Tornado.stop_std_progress
     end
 
     def download(id)
@@ -61,6 +62,7 @@ module Tornado
         content += chunk.raw_content
         i += 1
       end
+      Tornado.stop_std_progress
       return file_info['name'], content
     end
 
