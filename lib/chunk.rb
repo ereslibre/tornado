@@ -26,37 +26,71 @@ module Tornado
 
   class Chunk
 
-    attr_accessor :content
+    def content
+      @content
+    end
 
-    def initialize(content)
+    def raw_content
+      @raw_content
+    end
+
+    def content=(content)
       @content = content
+      @raw_content = Base64.decode64 @content
+    end
+
+    def raw_content=(raw_content)
+      @raw_content = raw_content
+      @content = Base64.encode64 @raw_content
     end
 
     def size
-      @content.unpack('C*').size
+      @raw_content.unpack('C*').size
     end
 
     def id
-      Digest::SHA512.hexdigest @content
+      Digest::SHA512.hexdigest @raw_content
     end
 
     def to_s
       id
     end
 
+    def save
+      Chunk.save id, @content
+    end
+
+    def self.all
+      res = Array.new
+      Dir.glob(File.join(Tornado.root_path, '*')) do |file|
+        filename = File.basename file
+        next unless filename =~ /^\w{128}$/
+        res << find(filename)
+      end
+      res
+    end
+
+    def self.find(id)
+      chunk = Chunk.new
+      chunk.content = self.read id
+      chunk
+    end
+
+    private
+
     def self.read(id)
       raise unless exists?(id)
-      File.open("#{Tornado.root_path}/#{id}", 'rb').read
+      File.open(File.join(Tornado.root_path, id), 'rb').read
     end
 
     def self.save(id, content)
-      File.open("#{Tornado.root_path}/#{id}", 'wb') { |f|
+      File.open(File.join(Tornado.root_path, id), 'wb') { |f|
         f.write(content)
       }
     end
 
     def self.exists?(id)
-      File.exists? "#{Tornado.root_path}/#{id}"
+      File.exists? File.join(Tornado.root_path, id)
     end
 
   end

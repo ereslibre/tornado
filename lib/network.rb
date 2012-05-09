@@ -33,7 +33,8 @@ module Tornado
     end
 
     def self.chunk(id)
-      Chunk.read id
+      chunk = Chunk.find id
+      chunk.content
     end
 
     def self.upload(file_path)
@@ -53,7 +54,9 @@ module Tornado
     end
 
     def self.propagate_chunk(id, content)
-      Chunk.save id, content
+      chunk = Chunk.new
+      chunk.content = content
+      chunk.save
     end
 
     def self.peers

@@ -30,7 +30,9 @@ class File
     @chunks = Array.new
     self.rewind
     while (content = self.read(102400))
-      @chunks << Tornado::Chunk.new(content)
+      chunk = Tornado::Chunk.new
+      chunk.raw_content = content
+      @chunks << chunk
     end
     @chunks
   end

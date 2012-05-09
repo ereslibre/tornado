@@ -46,6 +46,11 @@ optparse = OptionParser.new do |opts|
   opts.on('-p', '--peers', 'Ask for known peers') do
     options[:peers] = true
   end
+
+  options[:integrity] = false
+  opts.on('-c', '--check-integrity', 'Checks storage integrity') do
+    options[:integrity] = true
+  end
 end.parse!
 
 if options[:upload]
@@ -54,4 +59,6 @@ elsif options[:download]
   Tornado::Network.download options[:download]
 elsif options[:peers]
   puts Tornado::Network.peers
+elsif options[:integrity]
+  puts Tornado::Chunk.all
 end
