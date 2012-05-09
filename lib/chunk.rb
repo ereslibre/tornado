@@ -26,7 +26,7 @@ module Tornado
 
   class Chunk
 
-    attr_accessor :filename
+    attr_accessor :offset, :filename
 
     def content
       @content
