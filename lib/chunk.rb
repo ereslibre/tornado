@@ -28,11 +28,18 @@ module Tornado
 
     attr_accessor :offset, :filename
 
+    def initialize
+      @content = nil
+      @raw_content = nil
+    end
+
     def content
+      self.content = Chunk.read @filename unless @content
       @content
     end
 
     def raw_content
+      self.content = Chunk.read @filename unless @raw_content
       @raw_content
     end
 
@@ -55,7 +62,7 @@ module Tornado
     end
 
     def id
-      Digest::SHA512.hexdigest @raw_content
+      Digest::SHA512.hexdigest raw_content
     end
 
     def to_s
@@ -83,7 +90,6 @@ module Tornado
     def self.find(id)
       chunk = Chunk.new
       chunk.filename = id
-      chunk.content = self.read id
       chunk
     end
 
