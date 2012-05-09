@@ -49,15 +49,19 @@ module Tornado
         i += 1
       end
       Tornado.stop_std_progress
-      percent_valid = valid * 100 / all_chunks.count
-      puts 'summary'
-      puts "total chunks: #{all_chunks.count}"
-      puts "total size: #{total_size} bytes"
-      puts "total real size: #{total_real_size} bytes"
-      puts "invalid chunks size: #{invalid_size} bytes"
-      puts "invalid chunks real size: #{invalid_real_size} bytes"
-      puts "valid chunks: #{percent_valid}%"
-      puts "invalid chunks: #{invalid.count}"
+      if all_chunks.count != 0
+        percent_valid = valid * 100 / all_chunks.count
+        puts 'summary'
+        puts "total chunks: #{all_chunks.count}"
+        puts "total size: #{total_size} bytes"
+        puts "total real size: #{total_real_size} bytes"
+        puts "invalid chunks size: #{invalid_size} bytes"
+        puts "invalid chunks real size: #{invalid_real_size} bytes"
+        puts "valid chunks: #{percent_valid}%"
+        puts "invalid chunks: #{invalid.count}"
+      else
+        puts 'your storage is empty yet !'
+      end
     end
 
   end
