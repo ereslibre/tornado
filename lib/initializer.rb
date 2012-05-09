@@ -24,8 +24,14 @@
 
 module Tornado
 
+  @@start_time = Time.now
+
   def self.root_path
     File.join Dir.home, '.tornado'
+  end
+
+  def self.uptime
+    (Time.now - @@start_time).to_i
   end
 
   def self.std_log(log)

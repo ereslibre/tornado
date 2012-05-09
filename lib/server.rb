@@ -57,6 +57,10 @@ module Tornado
       Network.peers.to_json
     end
 
+    get '/uptime' do
+      Tornado.uptime.to_json
+    end
+
   end
 
 end
