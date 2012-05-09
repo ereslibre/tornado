@@ -88,7 +88,7 @@ module Tornado
     end
 
     def self.default_size
-      102400
+      1048576
     end
 
     private
