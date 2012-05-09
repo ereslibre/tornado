@@ -24,22 +24,27 @@
 
 class File
 
-  attr_reader :chunks
+  def chunk(number)
+    offset = number * Tornado::Chunk.default_size
+    self.seek offset
+    chunk = Tornado::Chunk.new
+    chunk.raw_content = self.read Tornado::Chunk.default_size
+    chunk.offset = offset
+    chunk
+  end
 
-  def chunk
-    @chunks = Array.new
-    self.rewind
-    while (content = self.read(Tornado::Chunk.default_size))
-      chunk = Tornado::Chunk.new
-      chunk.raw_content = content
-      @chunks << chunk
-    end
-    @chunks
+  def chunk_count
+    (self.size / Tornado::Chunk.default_size) + (self.size % Tornado::Chunk.default_size ? 1 : 0)
   end
 
   def id
+    @tornado_id if @tornado_id
+    digest = Digest::SHA512.new
     self.rewind
-    Digest::SHA512.hexdigest self.read
+    while (contents = self.read(Tornado::Chunk.default_size)) do
+      digest.update contents
+    end
+    @tornado_id = digest
   end
 
 end
