@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 # Copyright (c) 2012 Rafael Fernández López <ereslibre@ereslibre.es>
 #
 # Permission is hereby granted, free of charge, to any
