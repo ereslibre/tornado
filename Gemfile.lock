@@ -3,6 +3,14 @@ GEM
   specs:
     bdb (0.2.6.5)
       tuple (>= 0.1.2)
+    rack (1.4.1)
+    rack-protection (1.2.0)
+      rack
+    sinatra (1.3.2)
+      rack (~> 1.3, >= 1.3.6)
+      rack-protection (~> 1.2)
+      tilt (~> 1.3, >= 1.3.3)
+    tilt (1.3.3)
     tuple (0.1.2)
 
 PLATFORMS
@@ -10,3 +18,4 @@ PLATFORMS
 
 DEPENDENCIES
   bdb
+  sinatra
