@@ -1,4 +1,4 @@
 trusted_peers:
   peer_one:
-    ip: 127.0.0.1
+    ip: 178.79.177.8
     port: 4567
