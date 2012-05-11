@@ -35,7 +35,6 @@ module Tornado
     end
 
     get '/greet' do
-      Tornado.std_log "Meeting #{request.ip}"
       Map.known_peers << Peer.new(request.ip, 4567)
       nil
     end
