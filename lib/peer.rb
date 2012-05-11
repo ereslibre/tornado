@@ -68,6 +68,10 @@ module Tornado
       Tornado.stop_std_progress
     end
 
+    def greet
+      get '/greet'
+    end
+
     private
 
     def get(resource)

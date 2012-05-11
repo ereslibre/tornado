@@ -34,6 +34,12 @@ module Tornado
       content_type :json
     end
 
+    get '/greet' do
+      remote_ip = request['REMOTE_ADDR']
+      Tornado.std_log "Meeting #{remote_ip}"
+      Map.known_peers << Peer.new(remote_ip, 4567)
+    end
+
     get '/files/:file' do
       Network.chunks(params[:file]).to_json
     end

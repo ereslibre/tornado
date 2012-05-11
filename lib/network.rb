@@ -26,7 +26,7 @@ module Tornado
 
   class Network
 
-    @@peers = Config.trusted_peers
+    @peers = Config.trusted_peers
 
     def self.chunks(id)
       JSON.parse Persistent.get(id)
@@ -59,7 +59,7 @@ module Tornado
     end
 
     def self.peers
-      @@peers
+      @peers
     end
 
     private

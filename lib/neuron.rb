@@ -22,8 +22,26 @@
 # OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 # SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-require 'tornado'
-require 'server'
-require 'neuron'
+module Tornado
 
-Tornado::Neuron.wake_up
+  class Neuron
+
+    def self.wake_up
+      greet_trusted_peers
+    end
+
+    private
+
+    def self.greet_trusted_peers
+      Config.trusted_peers.each do |peer_|
+        begin
+          peer = Peer.new peer_['ip'], peer_['port']
+          peer.greet
+        rescue
+        end
+      end
+    end
+
+  end
+
+end

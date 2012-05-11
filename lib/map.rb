@@ -22,8 +22,16 @@
 # OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 # SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-require 'tornado'
-require 'server'
-require 'neuron'
+module Tornado
 
-Tornado::Neuron.wake_up
+  class Map
+
+    @known_peers = Array.new
+
+    class << self
+      attr_accessor :known_peers
+    end
+
+  end
+
+end
