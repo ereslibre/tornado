@@ -51,11 +51,13 @@ module Tornado
       id = params[:file]
       chunks = JSON.parse request.body.read
       Network.propagate_chunks id, chunks
+      nil
     end
 
     post '/chunks/:chunk' do
       id = params[:chunk]
       Network.propagate_chunk id, request.body.read
+      nil
     end
 
     get '/peers' do
