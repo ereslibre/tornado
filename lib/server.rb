@@ -34,8 +34,8 @@ module Tornado
       content_type :json
     end
 
-    get '/greet' do
-      Map.known_peers << Peer.new(request.ip, 4567)
+    get '/greet/:port' do
+      Map.known_peers << Peer.new(request.ip, params[:port].to_i)
       nil
     end
 

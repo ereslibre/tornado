@@ -36,7 +36,7 @@ module Tornado
       Config.trusted_peers.each do |peer_|
         begin
           peer = Peer.new peer_['ip'], peer_['port']
-          peer.greet
+          peer.greet 4567
         rescue
         end
       end

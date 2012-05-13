@@ -68,8 +68,8 @@ module Tornado
       Tornado.stop_std_progress
     end
 
-    def greet
-      get '/greet'
+    def greet(port)
+      get "/greet/#{port}"
     end
 
     private
